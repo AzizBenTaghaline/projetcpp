@@ -1,0 +1,18 @@
+# depslib dependency file v1.0
+1584205420 source:c:\users\azizb\onedrive\desktop\test\projetcpp\main.cpp
+	<iostream>
+
+1584205420 source:c:\users\azizb\onedrive\desktop\tp\projetcpp\main.cpp
+	<iostream>
+
+1745187864 source:c:\users\azizb\onedrive\desktop\tp\projetcpp\projetc.cpp
+	<iostream>
+	<vector>
+	<string>
+	"projetcpp.h"
+
+1745187893 c:\users\azizb\onedrive\desktop\tp\projetcpp\projetcpp.h
+	<iostream>
+	<vector>
+	<string>
+

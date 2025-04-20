@@ -1,0 +1,135 @@
+//avant validation
+#ifndef PROJETCPP_H_INCLUDED
+#define PROJETCPP_H_INCLUDED
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+class Employe {
+protected:
+    string nom;
+    string prenom;
+    int salaire;
+    static int nombreEmployes;
+    int nombreCompetences;
+    string* competences;
+
+public:
+    Employe(string n, string p, int s,int nc);
+    Employe(const Employe& e);
+    virtual ~Employe();
+    void ajouterCompetence(string competence);//m
+    void supprimerCompetence(string competence);//m
+    void modifierCompetence(string ancienneComp, string nouvelleComp);//m
+    void afficherCompetences();//m
+    virtual void afficherDetails()=0 ;
+    void augmenterSalaire(int pourcentage);
+    int obtenirSalaire() ;
+    static int obtenirNombreEmployes();
+    string getNom() ;
+    void setNom(string n);
+    string getPrenom();
+    void setPrenom(string p);
+    int getSalaire();
+    void setSalaire(int s);
+};
+
+class Responsable : public Employe {
+    string departement;
+public:
+    Responsable(string n, string p, int s,int nc,string d);
+    ~Responsable();
+    void afficherDetails();
+    string getDepartement();
+    void setDepartement(string d);
+};
+class Test {
+protected:
+    string codeTest;
+
+public:
+    Test(string code);
+    virtual ~Test();
+
+    string getCodeTest();
+    void setCodeTest(string code);
+};
+class Pharmacien : public Employe {
+    vector<Test*> tabTests;
+public:
+    Pharmacien(string n, string p, int s,int nc);
+    Pharmacien (const Pharmacien& P);
+    ~Pharmacien();
+    void afficherDetails();
+    int rechercher (string code);
+    void ajouterTest(const Test& T);
+    void supprimerTest(string code);
+    void modifierTest(string code, Test* nouveauTest);
+    void afficherTests();
+};
+
+class TestEnvironnement : public Test {
+    int temperature;
+    int humidite;
+    int pression;
+public:
+    TestEnvironnement(string code, int t, int h, int p);
+    virtual ~TestEnvironnement() {}
+    void verifierConditions();
+};
+
+class TestPurete : public Test {
+    int pH;
+    int viscosite;
+    int densite;
+public:
+    TestPurete(string code, int p, int v, int d);
+    virtual~TestPurete() {}
+    void estConforme() ;
+};
+
+class TestMicroBiologique : public Test {
+    int pourcentageBacterie;
+public:
+    TestMicroBiologique(string code, int pb);
+    virtual ~TestMicroBiologique() {}
+    bool estSterile();
+    void controleSterilite();
+};
+class Etudiant {
+    string nom;
+    string prenom;
+    string CIN;
+    string mention;
+    //static vector<Employe> listeEmployes;
+public:
+    Etudiant(string n, string p, string CIN, string m);
+    ~Etudiant();
+    void afficherInfos() ;
+    void postulerStage();
+    string getNom() ;
+    void setNom(string n);
+    string getPrenom();
+    void setPrenom(string p);
+    string getCIN();
+    void setCIN(string cin);
+    string getMention();
+    void setMention(string m);
+};
+
+class Stagiaire:public Etudiant,public Employe{
+    int dureeStage;
+public:
+    Stagiaire(string n, string p, string ci, string m, int s, int nc, int d);
+    ~Stagiaire();
+    void afficher() ;
+    string getNom() ;
+    void setNom(string n);
+    string getPrenom() ;
+    void setPrenom(string p);
+    int getDureeStage() ;
+    void setDureeStage(int d);
+};
+#endif // PROJETCPP_H_INCLUDED
