@@ -1,4 +1,5 @@
 //avant validation
+//update:21/04////01:43////kamelet el surcharge<< fel etudiant w el employe kamelou fel les heritages w t3adda l b9iyet les surchatges l
 #ifndef PROJETCPP_H_INCLUDED
 #define PROJETCPP_H_INCLUDED
 #include <iostream>
@@ -20,11 +21,14 @@ public:
     Employe(string n, string p, int s,int nc);
     Employe(const Employe& e);
     virtual ~Employe();
-    void ajouterCompetence(string competence);//m
+    Employe & operator=(const Employe&);
+    string& operator[](int);
+    friend ostream& operator<<(ostream&, Employe& );
+    friend istream& operator>>(istream&, Employe& );
+    /*void ajouterCompetence(string competence);//m
     void supprimerCompetence(string competence);//m
     void modifierCompetence(string ancienneComp, string nouvelleComp);//m
-    void afficherCompetences();//m
-    virtual void afficherDetails()=0 ;
+    void afficherCompetences();//m*/
     void augmenterSalaire(int pourcentage);
     int obtenirSalaire() ;
     static int obtenirNombreEmployes();
@@ -40,8 +44,9 @@ class Responsable : public Employe {
     string departement;
 public:
     Responsable(string n, string p, int s,int nc,string d);
-    ~Responsable();
-    void afficherDetails();
+    virtual ~Responsable();
+    friend ostream& operator<<(ostream&, Responsable& );
+    friend istream& operator>>(istream&, Responsable& );
     string getDepartement();
     void setDepartement(string d);
 };
@@ -52,7 +57,8 @@ protected:
 public:
     Test(string code);
     virtual ~Test();
-
+    friend ostream& operator<<(ostream&, Test& );
+    friend istream& operator>>(istream&, Test& );
     string getCodeTest();
     void setCodeTest(string code);
 };
@@ -62,12 +68,16 @@ public:
     Pharmacien(string n, string p, int s,int nc);
     Pharmacien (const Pharmacien& P);
     ~Pharmacien();
-    void afficherDetails();
+    Pharmacien & operator=(const Pharmacien&);
+    friend istream & operator>>(istream &,Pharmacien& );
+    friend ostream& operator<<(ostream&, Pharmacien& );
     int rechercher (string code);
-    void ajouterTest(const Test& T);
+    Test* & operator[](int);
+    //void ajouterTest(const Test& T);
+    Pharmacien operator+(const Test& t);
     void supprimerTest(string code);
     void modifierTest(string code, Test* nouveauTest);
-    void afficherTests();
+    //void afficherTests();
 };
 
 class TestEnvironnement : public Test {
@@ -76,6 +86,8 @@ class TestEnvironnement : public Test {
     int pression;
 public:
     TestEnvironnement(string code, int t, int h, int p);
+    friend ostream& operator<<(ostream&, TestEnvironnement& );
+    friend istream& operator>>(istream&, TestEnvironnement& );
     virtual ~TestEnvironnement() {}
     void verifierConditions();
 };
@@ -86,6 +98,8 @@ class TestPurete : public Test {
     int densite;
 public:
     TestPurete(string code, int p, int v, int d);
+    friend istream& operator>>(istream& in, TestPurete& tp);
+    friend ostream& operator<<(ostream&, TestPurete& );
     virtual~TestPurete() {}
     void estConforme() ;
 };
@@ -95,6 +109,8 @@ class TestMicroBiologique : public Test {
 public:
     TestMicroBiologique(string code, int pb);
     virtual ~TestMicroBiologique() {}
+    friend ostream& operator<<(ostream&, TestMicroBiologique& );
+    friend istream& operator>>(istream&, TestMicroBiologique& );
     bool estSterile();
     void controleSterilite();
 };
@@ -107,7 +123,8 @@ class Etudiant {
 public:
     Etudiant(string n, string p, string CIN, string m);
     ~Etudiant();
-    void afficherInfos() ;
+    friend ostream& operator<<(ostream&, Etudiant& );
+    friend istream& operator>>(istream&, Etudiant& );
     void postulerStage();
     string getNom() ;
     void setNom(string n);
@@ -124,7 +141,8 @@ class Stagiaire:public Etudiant,public Employe{
 public:
     Stagiaire(string n, string p, string ci, string m, int s, int nc, int d);
     ~Stagiaire();
-    void afficher() ;
+    friend ostream& operator<<(ostream&, Stagiaire&);
+    friend istream& operator>>(istream&, Stagiaire&);
     string getNom() ;
     void setNom(string n);
     string getPrenom() ;
@@ -132,4 +150,6 @@ public:
     int getDureeStage() ;
     void setDureeStage(int d);
 };
+
+
 #endif // PROJETCPP_H_INCLUDED

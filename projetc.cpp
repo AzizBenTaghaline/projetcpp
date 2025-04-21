@@ -29,29 +29,38 @@ Employe::Employe(const Employe&e){
     competences[i]=e.competences[i];
 }
 }
-void Employe::afficherDetails() {
-    cout << "Nom: " << nom << ", Prénom: " << prenom << ", Salaire: " << salaire << " DT" << endl;
+ostream& operator<<(ostream& out, Employe& e )
+{ out<< "Nom: " << e.nom << ", Prénom: " << e.prenom << ", Salaire: " << e.salaire << " DT" << "Le nombre des competences:"<<e.nombreCompetences<<endl;
+return out;
+}
+ostream& operator<<(ostream& out,Test& t )
+{ out<< "Le code: " << t.codeTest <<endl;
+return out;
 }
 Employe::~Employe() {
     nombreEmployes--;
     delete[] competences;
 }
-/*void Employe::ajouterEmploye(const Employe& emp) {
-    listeEmployes.push_back(emp);
+Employe&Employe::operator=(const Employe& e)
+{
+if (this != &e)
+{
+delete[] competences;
+nom=e.nom;
+prenom=e.prenom;
+salaire=e.salaire;
+nombreCompetences=e.nombreCompetences;
+competences =new string[nombreCompetences];
+for(unsigned int i=0;i<nombreCompetences;i++){
+competences[i]=e.competences[i];}
+}
+return *this; }
+
+string & Employe :: operator[](int a)
+{
+return(competences[a]);
 }
 
-void Employe::afficherEmployes() {
-    for (const auto& emp : listeEmployes) {
-        emp.afficherDetails();
-    }
-}
-
-void Employe::supprimerEmploye(int index) {
-    if (index >= 0 && index < listeEmployes.size()) {
-        listeEmployes[index] = listeEmployes.back();
-        listeEmployes.pop_back();
-    }
-}*/
 Test::Test(string c){
     this->codeTest=c;}
 
@@ -63,10 +72,10 @@ Responsable::Responsable(string n, string p, int s,int nc, string d) : Employe(n
 
 Responsable::~Responsable() {}
 
-void Responsable::afficherDetails() {
-    Employe::afficherDetails();
-    cout << "Poste: Responsable" << endl;
-}
+ostream& operator<<(ostream& out, Responsable& r )
+{   Employe* e=&r;
+    out<<*e<<", Le departement:"<<r.departement<<endl;
+return out;}
 
 Pharmacien::Pharmacien(string n, string p, int s,int nc) : Employe(n, p, s,nc) {}
 
@@ -90,26 +99,20 @@ T=new TestPurete(static_cast<const TestPurete&>(*P.tabTests[i]));
 tabTests.push_back(T);
 }
 }
-void Pharmacien::ajouterTest(const Test& T) {
-    Test* t;
-    if (typeid(T) == typeid(TestEnvironnement)) {
-        t = new TestEnvironnement(dynamic_cast<const TestEnvironnement&>(T));
-    } else if (typeid(T) == typeid(TestMicroBiologique)) {
-        t = new TestMicroBiologique(dynamic_cast<const TestMicroBiologique&>(T));
-    } else if (typeid(T) == typeid(TestPurete)) {
 
-        t = new TestPurete(dynamic_cast<const TestPurete&>(T));
-    }
-
-    tabTests.push_back(t);
+Pharmacien Pharmacien::operator+(const Test& t) {
+    Pharmacien* P;
+    Test* newTest = new Test(t);
+    P->tabTests.push_back(newTest);
+    return *P;
 }
 
-void Pharmacien::afficherTests() {
+/*void Pharmacien::afficherTests() {
     cout << "Tests effectués par " << nom << " :" << endl;
     for (Test* test : tabTests) {
         cout << "- Code: " << test->getCodeTest() << endl;
     }
-}
+}*/
 
 Pharmacien::~Pharmacien() {
 for (unsigned int i=0;i<tabTests.size();i++){
@@ -126,10 +129,19 @@ int Pharmacien::rechercher(string code){
     }
 }
 
-void Pharmacien::afficherDetails() {
-    Employe::afficherDetails();
-    cout << "Poste: Pharmacien" << endl;
-}
+ostream & operator<<(ostream &out, Pharmacien& P)
+{   Employe* e=&P;
+    out<<*e;
+    for (int i=0; i<P.tabTests.size(); i++){
+    if (typeid(*P.tabTests[i])==typeid(Test))
+    out<<*P.tabTests[i]<<endl;
+    else if (typeid(*P.tabTests[i])==typeid(TestEnvironnement))
+    out<<static_cast<TestEnvironnement&>(*P.tabTests[i])<<endl;
+    else if (typeid(*P.tabTests[i])==typeid(TestMicroBiologique))
+    out<<static_cast<TestMicroBiologique&>(*P.tabTests[i])<<endl;
+    else if (typeid(*P.tabTests[i])==typeid(TestPurete))
+    out<<static_cast<TestPurete&>(*P.tabTests[i])<<endl;}
+    return out;}
 
 void Pharmacien::supprimerTest(string code){
     int i = rechercher(code);
@@ -148,6 +160,40 @@ void Pharmacien::modifierTest(string code, Test* nouveauTest) {
         }
     }
 }
+
+Test* & Pharmacien :: operator[](int a)
+{
+return(tabTests[a]);
+}
+
+Pharmacien& Pharmacien::operator=(const Pharmacien& P)
+{
+Test *T;
+if (this != &P)
+{
+for (unsigned int i=0;i<tabTests.size();i++)
+{
+delete tabTests[i];
+}
+tabTests.clear();
+for (unsigned int i=0;i<P.tabTests.size();i++)
+{
+if (typeid(*P.tabTests[i])==typeid(Test)) {
+T=new Test(*P.tabTests[i]);
+}
+else if (typeid(*P.tabTests[i])==typeid(TestEnvironnement)) {
+T=new TestEnvironnement(static_cast<const TestEnvironnement&>(*P.tabTests[i]));
+}
+else if (typeid(*P.tabTests[i])==typeid(TestMicroBiologique)) {
+T=new TestMicroBiologique(static_cast<const TestMicroBiologique&>(*P.tabTests[i]));
+}
+else if (typeid(*P.tabTests[i])==typeid(TestPurete)) {
+T=new TestPurete(static_cast<const TestPurete&>(*P.tabTests[i]));
+}
+tabTests.push_back(T);
+}
+}
+return *this; }
 
 TestEnvironnement::TestEnvironnement(string code, int t, int h, int p) : Test(code) {
     this->temperature = t;
@@ -294,4 +340,153 @@ void TestMicroBiologique::controleSterilite() {
         cout << "Le test microbiologique est non conforme : présence excessive de bactéries !" << endl;
     }
 }
+ostream& operator<<(ostream& out, Etudiant& e )
+{ out<< "Nom: " << e.nom << ", Prénom: " << e.prenom << ", CIN: " << e.CIN << " DT" << ", La mention:"<<e.mention<<endl;
+return out;}
+ostream& operator<<(ostream& out, TestEnvironnement& te )
+{   Test* t=&te;
+    out<<*t<<", La temperature:"<<te.temperature<<", L'humidite:"<<te.humidite<<", La pression:"<<te.pression<<endl;
+return out;}
 
+ostream& operator<<(ostream& out, TestMicroBiologique& tm )
+{   Test* t=&tm;
+    out<<*t<<", La pourcentage:"<<tm.pourcentageBacterie<<endl;
+return out;}
+
+ostream& operator<<(ostream& out, TestPurete& tp )
+{   Test* t=&tp;
+    out<<*t<<", Le PH:"<<tp.pH<<", La viscosite:"<<tp.viscosite<<", La densite:"<<tp.densite<<endl;
+return out;}
+ostream& operator<<(ostream& out, Stagiaire& s)
+{
+    Employe* e = &s;
+    Etudiant* etu = &s;
+    out << *e;
+    out << *etu;
+    out << "Durée du stage : " << s.dureeStage<< " jours" << endl;
+    return out;
+}
+
+istream& operator>>(istream& in, Employe& e) {
+    cout << "Nom: ";
+    in >> e.nom;
+    cout << "Prénom: ";
+    in >> e.prenom;
+    cout << "Salaire: ";
+    in >> e.salaire;
+    cout << "Nombre de compétences: ";
+    in >> e.nombreCompetences;
+    e.competences = new string[e.nombreCompetences];
+    for (int i = 0; i < e.nombreCompetences; ++i) {
+        cout << "Compétence " << i + 1 << ": ";
+        in >> e.competences[i];
+    }
+    return in;
+}
+istream& operator>>(istream& in, Test& t) {
+    cout << "Code du test: ";
+    in >> t.codeTest;
+    return in;
+}
+istream& operator>>(istream& in, Responsable& r) {
+    Employe* e=&r;
+    in >>*e;
+    cout << "Département: ";
+    in >> r.departement;
+    return in;
+}
+
+
+
+istream& operator>>(istream& in, Pharmacien& P)
+{
+    Employe* e = &P;
+    in >> *e;
+
+    char rep;
+    int choix;
+
+    do {
+        cout << "Entrer un choix (1: Test, 2: Environnement, 3: Microbiologique, 4: Pureté): ";
+        in >> choix;
+        if (choix == 1) {
+            Test* T = new Test("");
+            in >> *T;
+            P.tabTests.push_back(T);
+        }
+        else if (choix == 2) {
+            TestEnvironnement* T = new TestEnvironnement("",0,0,0);
+            in >> *T;
+            P.tabTests.push_back(T);
+        }
+        else if (choix == 3) {
+            TestMicroBiologique* T = new TestMicroBiologique("",0);
+            in >> *T;
+            P.tabTests.push_back(T);
+        }
+        else if (choix == 4) {
+            TestPurete* T = new TestPurete("",0,0,0);
+            in >> *T;
+            P.tabTests.push_back(T);
+        }
+        else {
+            cout << "Choix invalide !" << endl;
+        }
+
+        cout << "Ajouter un autre test ? (o/n): ";
+        in >> rep;
+    } while (rep == 'o' || rep == 'O');
+
+    return in;
+}
+
+
+
+
+
+istream& operator>>(istream& in, TestEnvironnement& te) {
+    Test* t=&te;
+    in >>*t;
+    cout << "Température: ";
+    in >> te.temperature;
+    cout << "Humidité: ";
+    in >> te.humidite;
+    cout << "Pression: ";
+    in >> te.pression;
+    return in;
+}
+istream& operator>>(istream& in, TestMicroBiologique& tm) {
+    Test* t=&tm;
+    in >>*t;
+    cout << "Pourcentage de bactéries: ";
+    in >> tm.pourcentageBacterie;
+    return in;
+}
+istream& operator>>(istream& in, TestPurete& tp) {
+    Test* t=&tp;
+    cout << "pH: ";
+    in >> tp.pH;
+    cout << "Viscosité: ";
+    in >> tp.viscosite;
+    cout << "Densité: ";
+    in >> tp.densite;
+    return in;
+}
+istream& operator>>(istream& in, Etudiant& e) {
+    cout << "Nom: ";
+    in >> e.nom;
+    cout << "Prénom: ";
+    in >> e.prenom;
+    cout << "CIN: ";
+    in >> e.CIN;
+    cout << "Mention: ";
+    in >> e.mention;
+    return in;
+}
+istream& operator>>(istream& in, Stagiaire& s) {
+    Employe* e = &s;
+    Etudiant* etu = &s;
+    cout << "Durée du stage (en jours): ";
+    in >> s.dureeStage;
+    return in;
+}

@@ -33,6 +33,7 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="main.cpp" />
+		<Unit filename="projetc.cpp" />
 		<Unit filename="projetcpp.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
