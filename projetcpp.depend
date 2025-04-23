@@ -2,17 +2,30 @@
 1584205420 source:c:\users\azizb\onedrive\desktop\test\projetcpp\main.cpp
 	<iostream>
 
-1584205420 source:c:\users\azizb\onedrive\desktop\tp\projetcpp\main.cpp
-	<iostream>
-
-1745245759 source:c:\users\azizb\onedrive\desktop\tp\projetcpp\projetc.cpp
+1745368133 source:c:\users\azizb\onedrive\desktop\tp\projetcpp\main.cpp
 	<iostream>
 	<vector>
-	<string>
+	<fstream>
 	"projetcpp.h"
 
-1745245783 c:\users\azizb\onedrive\desktop\tp\projetcpp\projetcpp.h
+1745368289 source:c:\users\azizb\onedrive\desktop\tp\projetcpp\projetc.cpp
 	<iostream>
 	<vector>
 	<string>
+	<fstream>
+	<istream>
+	"projetcpp.h"
+
+1745368439 c:\users\azizb\onedrive\desktop\tp\projetcpp\projetcpp.h
+	<iostream>
+	<vector>
+	<string>
+
+1745268042 c:\users\azizb\onedrive\desktop\tp\projetcpp\projetc.cpp
+	<iostream>
+	<vector>
+	<string>
+	<fstream>
+	<istream>
+	"projetcpp.h"
 
