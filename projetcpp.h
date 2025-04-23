@@ -97,6 +97,9 @@ public:
     friend istream& operator>>(istream&, TestEnvironnement& );
     virtual ~TestEnvironnement() {}
     void verifierConditions();
+    int getTemperature() const { return temperature; }
+    int getHumidite() const { return humidite; }
+    int getPression() const { return pression; }
 };
 
 class TestPurete : public Test {
@@ -109,6 +112,9 @@ public:
     friend ostream& operator<<(ostream&, TestPurete& );
     virtual~TestPurete() {}
     void estConforme() ;
+    int getPH() const { return pH; }
+    int getViscosite() const { return viscosite; }
+    int getDensite() const { return densite; }
 };
 
 class TestMicroBiologique : public Test {
@@ -119,6 +125,7 @@ public:
     friend ostream& operator<<(ostream&, TestMicroBiologique& );
     friend istream& operator>>(istream&, TestMicroBiologique& );
     bool estSterile();
+    int getPourcentageBacterie() const { return pourcentageBacterie; }
     void controleSterilite();
 };
 class Etudiant {

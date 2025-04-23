@@ -147,9 +147,7 @@ ostream & operator<<(ostream &out, Pharmacien& P)
 {   Employe* e=&P;
     out<<*e;
     for (int i=0; i<P.tabTests.size(); i++){
-    if (typeid(*P.tabTests[i])==typeid(Test))
-    out<<*P.tabTests[i]<<endl;
-    else if (typeid(*P.tabTests[i])==typeid(TestEnvironnement))
+    if (typeid(*P.tabTests[i])==typeid(TestEnvironnement))
     out<<static_cast<TestEnvironnement&>(*P.tabTests[i])<<endl;
     else if (typeid(*P.tabTests[i])==typeid(TestMicroBiologique))
     out<<static_cast<TestMicroBiologique&>(*P.tabTests[i])<<endl;
@@ -505,82 +503,11 @@ void Pharmacien::creer(fstream &f){
     f.open("Pharmacien.txt", ios ::in | ios ::out |ios ::trunc) ;
     if( ! f.is_open()) {exit(-1);}}
 
-/*istream & operator>>(istream &in, Pharmacien* P)
-{ Employe* e = P;
-    in >> *e;
-    char rep;
+istream& operator>>(istream& in, Pharmacien* P){
     int choix;
-    do {
-        cout << "Entrer un choix (1: Environnement, 2: Microbiologique, 3: Pureté): ";
-        cin >> choix;
-        if (choix == 1) {
-            TestEnvironnement* T = new TestEnvironnement("",0,0,0);
-            cin >> *T;
-            P->tabTests.push_back(T);
-        }
-        else if (choix == 2) {
-            TestMicroBiologique* T = new TestMicroBiologique("",0);
-            cin >> *T;
-            P->tabTests.push_back(T);
-        }
-        else if (choix == 3) {
-
-            TestPurete* T = new TestPurete("",0,0,0);
-            cin >> *T;
-            P->tabTests.push_back(T);
-        }
-        else {
-            cout << "Choix invalide !" << endl;
-        }
-
-        cout << "Ajouter un autre test ? (o/n): ";
-        in >> rep;
-    } while (rep == 'o' || rep == 'O');
-
-    return in;
-}*/
-
-/*istream& operator>>(istream& in, Pharmacien* P)
-{   in.seekg(0);
+    in.seekg(0);
     Employe* e = P;
     in >> *e;
-    char rep;
-    int choix;
-
-    do {
-        cout << "Entrer un choix (1: Environnement, 2: Microbiologique, 3: Pureté): ";
-        in >> choix;
-        if (choix == 1) {
-            TestEnvironnement* T = new TestEnvironnement("",0,0,0);
-            in >> *T;
-            P->tabTests.push_back(T);
-        }
-        else if (choix == 2) {
-            TestMicroBiologique* T = new TestMicroBiologique("",0);
-            in >> *T;
-            P->tabTests.push_back(T);
-        }
-        else if (choix == 3) {
-            TestPurete* T = new TestPurete("",0,0,0);
-            in >> *T;
-            P->tabTests.push_back(T);
-        }
-        else {
-            cout << "Choix invalide !" << endl;
-        }
-
-        cout << "Ajouter un autre test ? (o/n): ";
-        in >> rep;
-    } while (rep == 'o' || rep == 'O');
-
-    return in;
-}*/
-/*
-istream& operator>>(istream& in, Pharmacien* P)
-{
-    Employe* e = P;
-    in >> *e;
-    int choix;
     while(1) {
         in >> choix;
         if(in.eof() )break;
@@ -597,17 +524,6 @@ istream& operator>>(istream& in, Pharmacien* P)
             in >> *T;
             P->tabTests.push_back(T);}}
     return in;
-}*/
-istream& operator>>(istream& in, Pharmacien* P)
-{   in.seekg(0);
-    Employe* e = P;
-    in >> *e;
-    for (int i = 0; i < P->tabTests.size(); ++i) {
-        if (P->tabTests[i]) {
-             in>>*(P->tabTests[i]);  // suppose que les tests surchargent aussi <<
-        }
-    }
-    return in;
 }
 void Pharmacien::lire_fichier(){
     fstream fi("Pharmacien.txt");
@@ -615,7 +531,7 @@ void Pharmacien::lire_fichier(){
     fi>>this;
     fi.close(); }
 ostream & operator<<(ostream &out, Pharmacien * P)
-{Employe* e=P;
+{
 cout<< "Nom: ";
 out<<P->nom<<endl;
 cout<<"Prénom: ";
@@ -628,14 +544,40 @@ for (int i = 0; i < P->nombreCompetences; ++i) {
         cout << "  - Compétence " << i + 1 << ": ";
         out<< P->competences[i] << endl;}
 for (int i=0; i<P->tabTests.size(); i++){
-    if (typeid(*P->tabTests[i])==typeid(Test))
-    out<<*P->tabTests[i]<<endl;
-    else if (typeid(*P->tabTests[i])==typeid(TestEnvironnement))
-    out<<static_cast<TestEnvironnement&>(*P->tabTests[i])<<endl;
-    else if (typeid(*P->tabTests[i])==typeid(TestMicroBiologique))
-    out<<static_cast<TestMicroBiologique&>(*P->tabTests[i])<<endl;
-    else if (typeid(*P->tabTests[i])==typeid(TestPurete))
-    out<<static_cast<TestPurete&>(*P->tabTests[i])<<endl;}
+    if (typeid(*P->tabTests[i])==typeid(TestEnvironnement)){
+    cout << "- Test TestEnvironnement " ;
+    out <<"1" << endl;
+    TestEnvironnement& t = static_cast<TestEnvironnement&>(*P->tabTests[i]);
+    cout << "Code: " ;
+    out<< t.getCodeTest() << endl;
+    cout << "Temperature: " ;
+    out<< t.getTemperature() << endl;
+    cout << "Humidite: " ;
+    out<< t.getHumidite() << endl;
+    cout << "Pression: " ;
+    out<< t.getPression() << endl;}
+    else if (typeid(*P->tabTests[i])==typeid(TestMicroBiologique)){
+    cout << "  - Test MicroBiologique " ;
+    out<<"2"<<endl;
+    TestMicroBiologique& t = static_cast<TestMicroBiologique&>(*P->tabTests[i]);
+    cout << "Code: " ;
+    out<< t.getCodeTest() << endl;
+    cout << "Pourcentage de bactéries: " ;
+    out<< t.getPourcentageBacterie() << endl;}
+
+    else if (typeid(*P->tabTests[i])==typeid(TestPurete)){
+    cout << "- Test Purete " ;
+    out<<"3"<<endl;
+    TestPurete& t = static_cast<TestPurete&>(*P->tabTests[i]);
+    cout << "Code: " ;
+    out<< t.getCodeTest() << endl;
+    cout << "pH: " ;
+    out<< t.getPH() << endl;
+    cout << "Viscosité: " ;
+    out<< t.getViscosite() << endl;
+    cout << "Densité: " ;
+    out<< t.getDensite() << endl;}
+}
 
 return out;}
 
@@ -643,7 +585,5 @@ void Pharmacien::enregistrer_fichier(){
 
     fstream f("Pharmacien.txt");
     if (!f) {cout<<"\n erreur fichier Pharmacien"; }
-    f.clear();
-    f.seekg(0);
     f<<this;
     f.close();}
