@@ -5,3 +5,6 @@
            //update:23/04////01:32///el fichiet w el surcharge ta3hom yemchi kol g3ad ken el extraction ta3 les tests ama les donnees ta3 el pharmacien kol you5erjou a3mel talla 3al operateur>>
           //update:24/04////00:03///kamelet el fichier kol juste fama message zayed yatla3 el mouchkla mel cout eli fel operator<<* inajem ina7iha kana netsaref fel les surcharges<< ta3 el test wel pharmacien (nzid operator<<test* el feyda tetna7a el cout men wesset el surcharge) 
          /************important:ba3teli zid fichier fel class employe balek el profa talba 7atta fel mere ***********/
+
+         /********matanssech te5dem el main ta3 el exception**********/
+         
