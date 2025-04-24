@@ -59,9 +59,11 @@ competences[i]=e.competences[i];}
 }
 return *this; }
 
-string & Employe :: operator[](int a)
-{
-return(competences[a]);
+string & Employe :: operator[](int i)
+{if((i<0)||(i>=nombreCompetences)){
+        Exception_Indice e(i);
+        throw e;}
+return(competences[i]);
 }
 
 Test::Test(string c){
@@ -173,10 +175,8 @@ void Pharmacien::modifierTest(string code, Test* nouveauTest) {
     }
 }
 
-Test* & Pharmacien :: operator[](int a)
-{
-return(tabTests[a]);
-}
+Test* & Pharmacien :: operator[](int a){
+    return(tabTests[a]);}
 
 Pharmacien& Pharmacien::operator=(const Pharmacien& P)
 {

@@ -22,7 +22,6 @@ int main() {
     p2.lire_fichier();
     cout<<&p2;
     /*
-    cout << "Pharmacien sauvegardé dans le fichier.\n";
     p.enregistrer_fichier();
     Pharmacien p2("Durand", "Claire", 5000,2);
     p2.lire_fichier();
