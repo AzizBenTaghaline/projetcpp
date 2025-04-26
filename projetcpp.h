@@ -64,7 +64,7 @@ protected:
     string codeTest;
 
 public:
-    Test(string code);
+    Test(string code = "");
     Test(const Test* T);
     virtual ~Test();
     friend ostream& operator<<(ostream&, Test& );

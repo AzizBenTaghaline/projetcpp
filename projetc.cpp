@@ -513,7 +513,7 @@ istream& operator>>(istream& in, Pharmacien* P){
     int choix;
     in.seekg(0);
     Employe* e = P;
-    in >> *e;
+    in >> e;
     while(1) {
         in >> choix;
         if(in.eof() )break;
@@ -641,7 +641,7 @@ void Employe::enregistrer_fichier(){
     f.close();}
 
 ostream& operator<<(ostream& out, Employe* e )
-{ cout<< "Nom: ";
+{ cout<<endl<< "Nom: ";
 out<<e->nom<<endl;
 cout<<"Prénom: ";
 out<< e->prenom<<endl;
@@ -656,18 +656,13 @@ return out;
 }
 
 istream& operator>>(istream& in, Employe* e) {
-    cout << "Nom: ";
     in >> e->nom;
-    cout << "Prénom: ";
     in >> e->prenom;
-    cout << "Salaire: ";
     in >> e->salaire;
-    cout << "Nombre de compétences: ";
     in >> e->nombreCompetences;
     delete[] e->competences;
     e->competences = new string[e->nombreCompetences];
     for (int i = 0; i < e->nombreCompetences; ++i) {
-        cout << "Compétence " << i + 1 << ": ";
         in >> e->competences[i];
     }
     return in;

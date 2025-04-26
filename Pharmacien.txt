@@ -2,6 +2,13 @@ Durand
 Claire
 5000
 0
-2
-MICRO01
-5
+1
+ENV01
+14
+22
+44
+3
+PURE01
+1
+99
+69

@@ -10,12 +10,13 @@ int main() {
     Test* t1 = new TestEnvironnement("ENV01", 14, 22,44);
     Test* t2 = new TestPurete("PURE01", 1, 99,69);
     Test* t3 = new TestMicroBiologique("MICRO01", 5);
-    Employe e("Durand", "Claire", 5000,0);
-    cout<<e;
+    Pharmacien e("Durand", "Claire", 5000,0);
+    e=e+t1;
+    e=e+t2;
     fstream f;
     e.creer(f);
-    f<<&e;
-    Employe e2;
+    e.enregistrer_fichier();
+    Pharmacien e2;
     e2.lire_fichier();
     cout<<&e2;
     /*
