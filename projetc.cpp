@@ -352,8 +352,14 @@ void TestMicroBiologique::controleSterilite() {
         cout << "Le test microbiologique est non conforme : présence excessive de bactéries !" << endl;
     }
 }
-ostream& operator<<(ostream& out, Etudiant& e )
+ostream& operator<<(ostream& out, Etudiant& e ){
 { out<< "Nom: " << e.nom << ", Prénom: " << e.prenom << ", CIN: " << e.CIN << " DT" << ", La mention:"<<e.mention<<endl;
+    map<string, float>::iterator it;
+    for (it =e.notes.begin(); it !=e.notes.end(); ++it) {
+    out << "Matière : " << it->first << " | Note : " << it->second << endl;
+    }
+}
+
 return out;}
 ostream& operator<<(ostream& out, TestEnvironnement& te )
 {   Test* t=&te;
@@ -587,3 +593,82 @@ void Pharmacien::enregistrer_fichier(){
     if (!f) {cout<<"\n erreur fichier Pharmacien"; }
     f<<this;
     f.close();}
+
+void Etudiant::ajouterNote(string matiere, float note) {
+    notes[matiere] = note;
+}
+
+void Etudiant::afficherNotes() {
+    for (const auto& pair : notes) {
+        cout << "Matière : " << pair.first << " | Note : " << pair.second << endl;
+    }
+}
+float Etudiant::calculerMoyenne() {
+    if (notes.empty()) return 0.0;
+
+    float somme = accumulate(notes.begin(), notes.end(), 0.0f,[](float total, const pair<string, float>& note) {
+            return total + note.second;
+        });
+
+    return somme / notes.size();
+}
+
+bool Etudiant::rechercherNote(string matiere, float& noteTrouvee) {
+    map<string, float>::iterator it = notes.find(matiere);
+    if (it != notes.end()) {
+        noteTrouvee = it->second;
+        return true;
+    } else {
+        return false;
+    }
+}
+
+void Employe::creer(fstream &f){
+    f.open("Employe.txt", ios ::in | ios ::out |ios ::trunc) ;
+    if( ! f.is_open()) {exit(-1);}}
+
+void Employe::lire_fichier(){
+    fstream fi("Employe.txt");
+    if (!fi) cout<<"\n erreur fichier Employe ";
+    fi>>this;
+    fi.close(); }
+
+void Employe::enregistrer_fichier(){
+
+    fstream f("Employe.txt");
+    if (!f) {cout<<"\n erreur fichier Employe"; }
+    f<<this;
+    f.close();}
+
+ostream& operator<<(ostream& out, Employe* e )
+{ cout<< "Nom: ";
+out<<e->nom<<endl;
+cout<<"Prénom: ";
+out<< e->prenom<<endl;
+cout<<"Salaire: ";
+out<< e->salaire<<endl;
+cout<<"Le nombre des competences:";
+out<<e->nombreCompetences<<endl;
+for (int i = 0; i < e->nombreCompetences; ++i) {
+        cout << "  - Compétence " << i + 1 << ": ";
+        out<< e->competences[i] << endl;}
+return out;
+}
+
+istream& operator>>(istream& in, Employe* e) {
+    cout << "Nom: ";
+    in >> e->nom;
+    cout << "Prénom: ";
+    in >> e->prenom;
+    cout << "Salaire: ";
+    in >> e->salaire;
+    cout << "Nombre de compétences: ";
+    in >> e->nombreCompetences;
+    delete[] e->competences;
+    e->competences = new string[e->nombreCompetences];
+    for (int i = 0; i < e->nombreCompetences; ++i) {
+        cout << "Compétence " << i + 1 << ": ";
+        in >> e->competences[i];
+    }
+    return in;
+}

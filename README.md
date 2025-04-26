@@ -8,3 +8,5 @@
 
          /********matanssech te5dem el main ta3 el exception**********/
          
+          //update:26/04////02:10///kamelet el stl w el algo w el fichier el theni mazel ken les methodes taa el competeence ajouter w ghirou kahaw t3adda lel menu 
+          

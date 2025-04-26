@@ -2,6 +2,9 @@
 #define PROJETCPP_H_INCLUDED
 #include <iostream>
 #include <vector>
+#include <algorithm>
+#include <map>
+#include <numeric>
 #include <string>
 using namespace std;
 
@@ -15,17 +18,22 @@ protected:
     string* competences;
 
 public:
-    Employe(string n, string p, int s,int nc);
+    Employe(string n="", string p="", int s=0,int nc=0);
     Employe(const Employe& e);
     virtual ~Employe();
     Employe & operator=(const Employe&);
     string& operator[](int);
+    static void creer(fstream&);
+    void lire_fichier();
+    void enregistrer_fichier();
     class Exception_Indice{
         public :
         int indice;
         Exception_Indice (int i){indice = i;}};
     friend ostream& operator<<(ostream&, Employe& );
     friend istream& operator>>(istream&, Employe& );
+    friend ostream& operator<<(ostream&, Employe* );
+    friend istream& operator>>(istream&, Employe* );
     /*void ajouterCompetence(string competence);//m
     void supprimerCompetence(string competence);//m
     void modifierCompetence(string ancienneComp, string nouvelleComp);//m
@@ -136,10 +144,15 @@ class Etudiant {
 public:
     Etudiant(string n, string p, string CIN, string m);
     ~Etudiant();
+    map<string, float> notes;
     friend ostream& operator<<(ostream&, Etudiant& );
     friend istream& operator>>(istream&, Etudiant& );
     void postulerStage();
     string getNom() ;
+    void ajouterNote(string matiere, float note);
+    void afficherNotes();
+    float calculerMoyenne() ;
+    bool rechercherNote(string matiere, float& noteTrouvee);
     void setNom(string n);
     string getPrenom();
     void setPrenom(string p);
