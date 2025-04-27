@@ -667,3 +667,64 @@ istream& operator>>(istream& in, Employe* e) {
     }
     return in;
 }
+void Employe::ajouterCompetence(string competence) {
+    string* nouveau = new string[nombreCompetences + 1];
+    for (int i = 0; i < nombreCompetences; i++) {
+        nouveau[i] = competences[i];}
+    nouveau[nombreCompetences] = competence;
+    delete[] competences;
+    competences = nouveau;
+    nombreCompetences++;
+}
+
+ void Employe::supprimerCompetence(string competence) {
+    bool trouve = false;
+    int index = -1;
+    for (int i = 0; i < nombreCompetences; i++) {
+        if (competences[i] == competence) {
+            trouve = true;
+            index = i;
+            break;}}
+    if (trouve) {
+        string* nouveau = new string[nombreCompetences - 1];
+        int j = 0;
+        for (int i = 0; i < nombreCompetences; i++) {
+            if (i != index) {
+                nouveau[j] = competences[i];
+                j++;}}
+        delete[] competences;
+        competences = nouveau;
+        nombreCompetences--;}
+    else {
+        cout << "Compétence non trouvée." << endl;
+    }
+}
+
+void Employe::modifierCompetence(string ancienneComp, string nouvelleComp) {
+    bool trouve = false;
+    for (int i = 0; i < nombreCompetences; i++) {
+        if (competences[i] == ancienneComp) {
+            competences[i] = nouvelleComp;
+            trouve = true;
+            cout << "Compétence modifiée avec succès." << endl;
+            break;
+            }
+        }
+        if (!trouve) {
+            cout << "Ancienne compétence non trouvée." << endl;
+        }
+    }
+void Stagiaire::ajouterProjet(const string& projet) {
+    projets.push_back(projet);
+}
+
+void Stagiaire::supprimerProjet(const string& projet) {
+    projets.remove(projet);
+}
+
+void Stagiaire::afficherProjets() {
+    cout << "Projets du stagiaire : " << endl;
+    for (list<string>::iterator it = projets.begin(); it != projets.end(); ++it) {
+        cout << "- " << *it << endl;
+    }
+}

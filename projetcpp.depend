@@ -2,13 +2,13 @@
 1584205420 source:c:\users\azizb\onedrive\desktop\test\projetcpp\main.cpp
 	<iostream>
 
-1745630394 source:c:\users\azizb\onedrive\desktop\tp\projetcpp\main.cpp
+1745770332 source:c:\users\azizb\onedrive\desktop\tp\projetcpp\main.cpp
 	<iostream>
 	<vector>
 	<fstream>
 	"projetcpp.h"
 
-1745630845 source:c:\users\azizb\onedrive\desktop\tp\projetcpp\projetc.cpp
+1745770867 source:c:\users\azizb\onedrive\desktop\tp\projetcpp\projetc.cpp
 	<iostream>
 	<vector>
 	<string>
@@ -16,10 +16,11 @@
 	<istream>
 	"projetcpp.h"
 
-1745630343 c:\users\azizb\onedrive\desktop\tp\projetcpp\projetcpp.h
+1745770711 c:\users\azizb\onedrive\desktop\tp\projetcpp\projetcpp.h
 	<iostream>
 	<vector>
 	<algorithm>
+	<list>
 	<map>
 	<numeric>
 	<string>

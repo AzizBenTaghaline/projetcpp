@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <list>
 #include <map>
 #include <numeric>
 #include <string>
@@ -34,10 +35,9 @@ public:
     friend istream& operator>>(istream&, Employe& );
     friend ostream& operator<<(ostream&, Employe* );
     friend istream& operator>>(istream&, Employe* );
-    /*void ajouterCompetence(string competence);//m
+    void ajouterCompetence(string competence);//m
     void supprimerCompetence(string competence);//m
     void modifierCompetence(string ancienneComp, string nouvelleComp);//m
-    void afficherCompetences();//m*/
     void augmenterSalaire(int pourcentage);
     int obtenirSalaire() ;
     static int obtenirNombreEmployes();
@@ -91,7 +91,6 @@ public:
     Pharmacien operator+(const Test* t);
     void supprimerTest(string code);
     void modifierTest(string code, Test* nouveauTest);
-    //void afficherTests();
 };
 
 class TestEnvironnement : public Test {
@@ -140,11 +139,10 @@ class Etudiant {
     string prenom;
     string CIN;
     string mention;
-    //static vector<Employe> listeEmployes;
+    map<string, float> notes;
 public:
     Etudiant(string n, string p, string CIN, string m);
     ~Etudiant();
-    map<string, float> notes;
     friend ostream& operator<<(ostream&, Etudiant& );
     friend istream& operator>>(istream&, Etudiant& );
     void postulerStage();
@@ -164,13 +162,15 @@ public:
 
 class Stagiaire:public Etudiant,public Employe{
     int dureeStage;
+    list<string> projets;
 public:
     Stagiaire(string n, string p, string ci, string m, int s, int nc, int d);
     ~Stagiaire();
     friend ostream& operator<<(ostream&, Stagiaire&);
     friend istream& operator>>(istream&, Stagiaire&);
-    //string getNom() ;
-    //void setNom(string n);
+    void ajouterProjet(const string& projet);
+    void supprimerProjet(const string& projet);
+    void afficherProjets();
     string getPrenom() ;
     void setPrenom(string p);
     int getDureeStage() ;
