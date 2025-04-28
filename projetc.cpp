@@ -123,12 +123,6 @@ Pharmacien Pharmacien::operator+(const Test* t) {
     return P;
 }
 
-/*void Pharmacien::afficherTests() {
-    cout << "Tests effectués par " << nom << " :" << endl;
-    for (Test* test : tabTests) {
-        cout << "- Code: " << test->getCodeTest() << endl;
-    }
-}*/
 
 Pharmacien::~Pharmacien() {
 for (unsigned int i=0;i<tabTests.size();i++){
