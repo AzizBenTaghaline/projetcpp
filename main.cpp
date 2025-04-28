@@ -135,7 +135,7 @@ case 2: {
         cin >> sousChoixFichiers;
 
         switch (sousChoixFichiers) {
-            case 1: { // Pharmacien
+            case 1: {
     int choixPharmacien;
     do {
         cout << "--- Gestion Fichier Pharmacien ---" << endl;
@@ -148,22 +148,110 @@ case 2: {
         cin >> choixPharmacien;
 
         switch (choixPharmacien) {
-            case 1:
-                cout << "Affichage des pharmaciens..." << endl;
-                // fonction afficherPharmaciens();
-                break;
-            case 2:
-                cout << "Ajout d'un pharmacien" << endl;
-                // fonction ajouterPharmacienAvecOperator();
-                break;
-            case 3:
+            case 1:{
+            cout << "Affichage des pharmaciens..." << endl;
+            fstream f;
+            cout << "===== Test Pharmacien - enregistrer_fichier() =====" << endl;
+            Pharmacien p1;
+            cin>>p1;
+            p1.creer(f);
+            p1.enregistrer_fichier();
+            cout << "Pharmacien enregistré avec succès dans le fichier !" << endl;
+            cout << "\n===== Test Pharmacien - lire_fichier() =====" << endl;
+            Pharmacien* p2=new Pharmacien("","",0,0);
+            p2->lire_fichier();
+            cout << "Pharmacien lu depuis le fichier :" << endl;
+            cout << p2;
+                break;}
+            case 2:{
+                    int n;
+                    cout << "Donner le nombre de pharmaciens : ";
+                    cin >> n;
+                    vector<Pharmacien> pharmaciens;
+                    for (int i = 0; i < n; ++i) {
+                    Pharmacien p;
+                    cout << "Saisie du pharmacien #" << (i + 1) << " :" << endl;
+                    cin >> p;
+                    pharmaciens.push_back(p);}
+                    ofstream fichier("Pharmacien.txt", ios::out);
+                    if (!fichier) {
+                        cerr << "Erreur d'ouverture du fichier !" << endl;
+                        return 1;}
+                    for (auto& pharmacien : pharmaciens) {
+                        fichier << pharmacien << endl;}
+                    fichier.close();
+                    cout << "\nTous les pharmaciens ont été enregistrés dans le fichier avec succès !" << endl;
+                break;}
+            case 3:{
                 cout << "Modification d'un pharmacien" << endl;
-                // fonction modiferPharmacien();
-                break;
-            case 4:
+                int n;
+                cout << "Donner le nombre de pharmaciens : ";
+                cin >> n;
+                vector<Pharmacien> pharmaciens;
+                for (int i = 0; i < n; ++i) {
+                    Pharmacien p;
+                    cout << "Saisie du pharmacien #" << (i + 1) << " :" << endl;
+                    cin >> p;
+                    pharmaciens.push_back(p);}
+                cout << "\nListe des pharmaciens saisis :" << endl;
+                for (size_t i = 0; i < pharmaciens.size(); ++i) {
+                cout << "Pharmacien #" << (i + 1) << " :" << endl;
+                cout << pharmaciens[i] << endl;}
+                string nomModif;
+                cout << "\nDonner le nom du pharmacien à modifier : ";
+                cin >> nomModif;
+                bool trouve = false;
+                for (auto& pharmacien : pharmaciens) {
+                if (pharmacien.getNom() == nomModif) {
+                        cout << "Pharmacien trouvé. Entrez les nouvelles informations :" << endl;
+                        cin >> pharmacien; // Remplacer les données avec cin (car operator>> est surchargé)
+                trouve = true;
+                break;}}
+                if (!trouve) {
+                    cout << "Aucun pharmacien trouvé avec ce nom." << endl;}
+                else {
+                ofstream fichier("Pharmacien.txt", ios::out);
+                if (!fichier) {
+                    cerr << "Erreur d'ouverture du fichier !" << endl;
+                return 1;}
+                for (auto& pharmacien : pharmaciens) {
+                        fichier << pharmacien << endl;}
+                fichier.close();
+                cout << "\nFichier mis à jour après modification." << endl;}
+                break;}
+            case 4:{
                 cout << "Suppression d'un pharmacien" << endl;
-                // fonction supprimerPharmacien();
-                break;
+                int n;
+                cout << "Donner le nombre de pharmaciens : ";
+                cin >> n;
+                vector<Pharmacien> pharmaciens;
+                for (int i = 0; i < n; ++i) {
+                Pharmacien p;
+                cout << "Saisie du pharmacien #" << (i + 1) << " :" << endl;
+                cin >> p;
+                pharmaciens.push_back(p);}
+                cout << "\nListe des pharmaciens saisis :" << endl;
+                for (size_t i = 0; i < pharmaciens.size(); ++i) {
+                cout << "Pharmacien #" << (i + 1) << " :" << endl;
+                cout << pharmaciens[i] << endl;}
+                string nomSupp;
+                cout << "\nDonner le nom du pharmacien à supprimer : ";
+                cin >> nomSupp;
+                auto it = pharmaciens.begin();
+                while (it != pharmaciens.end()) {
+                if (it->getNom() == nomSupp) {
+                    it = pharmaciens.erase(it);
+                    cout << "Pharmacien supprimé avec succès !" << endl;}
+                else {++it;}}
+                ofstream fichier("Pharmacien.txt", ios::out);
+                if (!fichier) {
+                    cerr << "Erreur d'ouverture du fichier !" << endl;
+                return 1;}
+                for (auto& pharmacien : pharmaciens) {
+                fichier << pharmacien << endl;}
+                fichier.close();
+                cout << "\nFichier mis à jour après suppression." << endl;
+                break;}
             case 0:
                 cout << "Retour au menu précédent..." << endl;
                 break;
@@ -178,7 +266,7 @@ case 2: {
     break;
 }
 
-            case 2:{ // Employe
+            case 2:{
     int choixEmploye;
     do {
         cout << "--- Gestion Fichier Employe ---" << endl;
@@ -191,22 +279,113 @@ case 2: {
         cin >> choixEmploye;
 
         switch (choixEmploye) {
-            case 1:
+            case 1:{
                 cout << "Affichage des employes..." << endl;
-                // fonction afficherPharmaciens();
-                break;
-            case 2:
+                fstream f;
+                cout << "===== Test Employe - enregistrer_fichier() =====" << endl;
+            Employe p1;
+            cin>>p1;
+            p1.creer(f);
+            p1.enregistrer_fichier();
+            cout << "Employe enregistré avec succès dans le fichier !" << endl;
+            cout << "\n===== Test Employe - lire_fichier() =====" << endl;
+            Employe* p2=new Employe("","",0,0);
+            p2->lire_fichier();
+            cout << "Employe lu depuis le fichier :" << endl;
+            cout << p2;
+                break;}
+            case 2:{
                 cout << "Ajout d'un employe" << endl;
-                // fonction ajouterPharmacienAvecOperator();
-                break;
-            case 3:
+                {
+                    int n;
+                    cout << "Donner le nombre de employes : ";
+                    cin >> n;
+                    vector<Employe> employes;
+                    for (int i = 0; i < n; ++i) {
+                    Employe p;
+                    cout << "Saisie du pharmacien #" << (i + 1) << " :" << endl;
+                    cin >> p;
+                    employes.push_back(p);}
+                    ofstream fichier("Employe.txt", ios::out);
+                    if (!fichier) {
+                        cerr << "Erreur d'ouverture du fichier !" << endl;
+                        return 1;}
+                    for (auto& employe : employes) {
+                        fichier << employe << endl;}
+                    fichier.close();
+                    cout << "\nTous les employes ont été enregistrés dans le fichier avec succès !" << endl;
+                break;}
+                break;}
+            case 3:{
                 cout << "Modification d'un employe" << endl;
-                // fonction modiferPharmacien();
-                break;
-            case 4:
+                int n;
+                cout << "Donner le nombre de employes : ";
+                cin >> n;
+                vector<Employe> employes;
+                for (int i = 0; i < n; ++i) {
+                    Employe p;
+                    cout << "Saisie du employe #" << (i + 1) << " :" << endl;
+                    cin >> p;
+                    employes.push_back(p);}
+                cout << "\nListe des employes saisis :" << endl;
+                for (size_t i = 0; i < employes.size(); ++i) {
+                cout << "Employe #" << (i + 1) << " :" << endl;
+                cout << employes[i] << endl;}
+                string nomModif;
+                cout << "\nDonner le nom du employe à modifier : ";
+                cin >> nomModif;
+                bool trouve = false;
+                for (auto& employe : employes) {
+                if (employe.getNom() == nomModif) {
+                        cout << "Employe trouvé. Entrez les nouvelles informations :" << endl;
+                        cin >> employe;
+                trouve = true;
+                break;}}
+                if (!trouve) {
+                    cout << "Aucun employe trouvé avec ce nom." << endl;}
+                else {
+                ofstream fichier("Employe.txt", ios::out);
+                if (!fichier) {
+                    cerr << "Erreur d'ouverture du fichier !" << endl;
+                return 1;}
+                for (auto& employe : employes) {
+                        fichier << employe << endl;}
+                fichier.close();
+                cout << "\nFichier mis à jour après modification." << endl;}
+                break;}
+            case 4:{
                 cout << "Suppression d'un employe" << endl;
-                // fonction supprimerPharmacien();
-                break;
+                int n;
+                cout << "Donner le nombre de employes : ";
+                cin >> n;
+                vector<Employe> employes;
+                for (int i = 0; i < n; ++i) {
+                Employe p;
+                cout << "Saisie du employe #" << (i + 1) << " :" << endl;
+                cin >> p;
+                employes.push_back(p);}
+                cout << "\nListe des employes saisis :" << endl;
+                for (size_t i = 0; i < employes.size(); ++i) {
+                cout << "Employe #" << (i + 1) << " :" << endl;
+                cout << employes[i] << endl;}
+                string nomSupp;
+                cout << "\nDonner le nom du employe à supprimer : ";
+                cin >> nomSupp;
+                auto it = employes.begin();
+                while (it != employes.end()) {
+                if (it->getNom() == nomSupp) {
+                    it = employes.erase(it);
+                    cout << "Employe supprimé avec succès !" << endl;}
+                else {++it;}}
+                ofstream fichier("Employe.txt", ios::out);
+                if (!fichier) {
+                    cerr << "Erreur d'ouverture du fichier !" << endl;
+                return 1;}
+                for (auto& employe : employes) {
+                fichier << employe << endl;}
+                fichier.close();
+                cout << "\nFichier mis à jour après suppression." << endl;
+                break;}
             case 0:
                 cout << "Retour au menu précédent..." << endl;
                 break;
@@ -291,7 +470,7 @@ case 2: {
     cout << "\nNotes de l'étudiant :" << endl;
     etu.afficherNotes();
     break;}
-            case 2: { // Algorithmes
+            case 2: {
     int choixAlgo;
     do {
         cout << "--- Menu Algorithmes STL ---" << endl;
@@ -319,16 +498,22 @@ case 2: {
                 etu.ajouterNote("Physique", 17.0);
                 etu.ajouterNote("SVT", 19.0);
                 float noteTrouvee;
+                string matiere;
+                etu.afficherNotes();
+                cout<<"La Saisie de la note 'Physique':";
+                cin>>noteTrouvee;
                 bool trouve = etu.rechercherNote("Physique", noteTrouvee);
                 if (trouve) {
                     cout << "La note de la matière 'Physique' est : " << noteTrouvee << endl;}
                 else {
                     cout << "La matière 'Physique' n'a pas été trouvée." << endl;}
-                trouve = etu.rechercherNote("Chimie", noteTrouvee);
+                cout<<"La Saisie d'une matiere inexistante:";
+                cin>>matiere;
+                    trouve = etu.rechercherNote(matiere, noteTrouvee);
                 if (trouve) {
                     cout << "La note de la matière 'Chimie' est : " << noteTrouvee << endl;}
                 else {
-                    cout << "La matière 'Chimie' n'a pas été trouvée." << endl;}
+                    cout << "La matière "<<matiere<<" n'a pas ete trouvée." << endl;}
                 break;}
             case 0:
                 cout << "Retour au menu précédent..." << endl;
@@ -345,6 +530,7 @@ case 2: {
 
                 break;
             case 0:
+
                 cout << "Retour au menu précédent..." << endl;
                 break;
             default:

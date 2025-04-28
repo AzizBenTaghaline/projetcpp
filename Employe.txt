@@ -1,6 +1,3 @@
-Durand
-Claire
-5000
-2
-jadida
-cat
+Nom: azadd, Prénom: fezfze, Salaire: 4655 DTLe nombre des competences:1
+  - Compétence 1: uyiu
+
