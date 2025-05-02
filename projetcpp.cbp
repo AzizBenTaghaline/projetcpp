@@ -32,6 +32,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="cpp.cpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="projetc.cpp" />
 		<Unit filename="projetcpp.h" />
